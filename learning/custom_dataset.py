@@ -29,14 +29,14 @@ def get_datasets(args, test_seed_offset=0):
     
     #for a simple train/test organization
     trainset = ['train/' + f for f in os.listdir(args.CUSTOM_SET_PATH + '/superpoint_graphs/train')]
-    testset  = ['test/' + f for f in os.listdir(args.CUSTOM_SET_PATH + '/superpoint_graphs/train')]
+    testset  = ['test/' + f for f in os.listdir(args.CUSTOM_SET_PATH + '/superpoint_graphs/test')]
     
     # Load superpoints graphs
     testlist, trainlist = [], []
     for n in trainset:
-        trainlist.append(spg.spg_reader(args, args.CUSTOM_SET_PATH + '/superpoint_graphs/' + n + '.h5', True))
+        trainlist.append(spg.spg_reader(args, args.CUSTOM_SET_PATH + '/superpoint_graphs/' + n, True))
     for n in testset:
-        testlist.append(spg.spg_reader(args, args.CUSTOM_SET_PATH + '/superpoint_graphs/' + n + '.h5', True))
+        testlist.append(spg.spg_reader(args, args.CUSTOM_SET_PATH + '/superpoint_graphs/' + n, True))
 
     # Normalize edge features
     if args.spg_attribs01:
@@ -66,7 +66,7 @@ def get_info(args):
 def preprocess_pointclouds(SEMA3D_PATH):
     """ Preprocesses data by splitting them by components and normalizing."""
 
-    for n in ['train', 'test_reduced', 'test_full']:
+    for n in ['train', 'test']:
         pathP = '{}/parsed/{}/'.format(SEMA3D_PATH, n)
         pathD = '{}/features/{}/'.format(SEMA3D_PATH, n)
         pathC = '{}/superpoint_graphs/{}/'.format(SEMA3D_PATH, n)
